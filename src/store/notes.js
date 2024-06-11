@@ -9,6 +9,7 @@ export const useNotesStore = defineStore("notes", {
   }),
   getters: {},
   actions: {
+    // Get All Notes
     async fetchNotes() {
       api.defaults.headers.common["Authorization"] = token;
 
@@ -22,5 +23,7 @@ export const useNotesStore = defineStore("notes", {
         this.notes = null;
       }
     },
+
+    // Create Note
   },
 });

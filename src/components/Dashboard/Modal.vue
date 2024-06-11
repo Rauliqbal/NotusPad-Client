@@ -19,9 +19,6 @@ defineProps({
         <div class="modal-body">
           <slot name="body">Body of modal dialog</slot>
         </div>
-        <div class="modal-footer">
-          <slot name="footer"> Modal footer </slot>
-        </div>
       </div>
     </div>
   </Transition>
