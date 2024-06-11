@@ -1,18 +1,26 @@
+import { api } from "@/service/api";
 import { defineStore } from "pinia";
+import Cookies from "js-cookie";
+const token = Cookies.get("auth");
 
 export const useNotesStore = defineStore("notes", {
   state: () => ({
-    notes: [
-      {
-        title: "title 1",
-        content: "content 1",
-      },
-      {
-        title: "title 2",
-        content: "content 2",
-      },
-    ],
+    notes: null,
   }),
   getters: {},
-  actions: {},
+  actions: {
+    async fetchNotes() {
+      api.defaults.headers.common["Authorization"] = token;
+
+      try {
+        const response = await api.get("/note");
+        const { data } = response.data;
+
+        this.notes = data;
+      } catch (error) {
+        console.log(error);
+        this.notes = null;
+      }
+    },
+  },
 });

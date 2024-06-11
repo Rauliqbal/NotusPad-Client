@@ -118,16 +118,12 @@ onMounted(() => userStore.fetcUser());
               v-show="dropdownOpen"
               class="absolute right-0 z-20 w-48 py-2 mt-2 bg-white rounded-md shadow-xl"
             >
-              <a
-                href="#"
+              <RouterLink
+                to="/dashboard/profile"
                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"
-                >Profile</a
-              >
-              <a
-                href="#"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"
-                >Products</a
-              >
+                >Profile
+              </RouterLink>
+
               <button
                 @click="logout"
                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white w-full text-left"
