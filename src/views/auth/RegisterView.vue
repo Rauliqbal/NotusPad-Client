@@ -1,81 +1,20 @@
 <script setup>
-import { api } from "@/service/api";
-import { reactive } from "vue";
-import { useRouter } from "vue-router";
-import { useToast } from "vue-toast-notification";
-import "vue-toast-notification/dist/theme-sugar.css";
-
-const $toast = useToast();
-const router = useRouter();
-
-const user = reactive({
-  username: "",
-  email: "",
-  password: "",
-});
-
-function register() {
-  api
-    .post("/register", {
-      username: user.username,
-      email: user.email,
-      password: user.password,
-    })
-
-    .then(async () => {
-      $toast.success("Berhasil buat akunmu!", {
-        position: "top-right",
-        duration: 3000,
-      });
-
-      await router.push("/login");
-    })
-    .catch((error) =>
-      $toast.error(error.response.data.message, {
-        position: "top-right",
-        duration: 3000,
-      })
-    );
-}
+import RegisterForm from "@/components/Authentication/RegisterForm.vue";
 </script>
 <template>
-  <main>
-    <h1>Register</h1>
-    <form @submit.prevent="register">
-      <div>
-        <label for="username">Username</label>
-        <input
-          type="text"
-          v-model="user.username"
-          id="username"
-          placeholder="Username"
-          required
-        />
-      </div>
+  <div
+    class="grid lg:grid-cols-5 h-screen overflow-hidden items-center justify-center"
+  >
+    <div
+      class="col-span-3 overflow-hidden rounded-r-2xl h-full hidden lg:block"
+    >
+      <img
+        class="object-cover w-full h-full"
+        src="https://images.unsplash.com/photo-1531346878377-a5be20888e57?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        alt="NotesPad Image"
+      />
+    </div>
 
-      <div>
-        <label for="email">Email</label>
-        <input
-          type="email"
-          v-model="user.email"
-          id="email"
-          placeholder="Email"
-          required
-        />
-      </div>
-
-      <div>
-        <label for="password">Password</label>
-        <input
-          type="password"
-          v-model="user.password"
-          id="password"
-          placeholder="Password"
-          required
-        />
-      </div>
-
-      <button>Register</button>
-    </form>
-  </main>
+    <RegisterForm class="col-span-2" />
+  </div>
 </template>

@@ -1,27 +1,53 @@
 import { api } from "@/service/api";
 import { defineStore } from "pinia";
-import Cookies from "js-cookie";
-const token = Cookies.get("auth");
+import { useRouter } from "vue-router";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
     user: null,
-    isAuthenticated: false,
   }),
   getters: {},
   actions: {
     async fetcUser() {
-      api.defaults.headers.common["Authorization"] = token;
-      try {
-        const response = await api.get("/user");
-        const { data } = response.data;
-
-        this.user = data;
-        this.isAuthenticated = true;
-      } catch (error) {
-        this.user = null;
-        this.isAuthenticated = false;
-      }
+      api
+        .get("/user")
+        .then((response) => {
+          if (response.data && response.data.data) {
+            this.user = response.data.data;
+          }
+          console.log(
+            `Selamat Datang %c${this.user.username}!.`,
+            "color: green"
+          );
+          console.log(
+            "Organize Work And Life Easily, %cFor Productivity",
+            "background-color: pink; color: black"
+          );
+        })
+        .catch((error) => {
+          if (error.response.status === 401) {
+            localStorage.clear();
+            window.location.reload();
+          }
+        });
     },
   },
 });
+
+// try {
+//   const response = await api.get("/user");
+//   if (response.data && response.data.data) {
+//     this.user = response.data.data;
+//   }
+
+//   console.log(`Selamat Datang %c${this.user.username}!.`, "color: green");
+//   console.log(
+//     "Organize Work And Life Easily, %cFor Productivity",
+//     "background-color: pink; color: black"
+//   );
+// } catch (error) {
+//   if (error.response.status === 401) {
+//     localStorage.clear();
+//     window.location.reload();
+//   }
+// },

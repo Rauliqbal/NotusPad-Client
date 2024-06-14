@@ -54,7 +54,7 @@ const inactiveClass = ref(
       <nav class="mt-10">
         <router-link
           class="flex items-center px-6 py-2 mt-4 duration-200 border-l-4"
-          :class="[$route.name === 'Dashboard' ? activeClass : inactiveClass]"
+          :class="[$route.name === 'dashboard' ? activeClass : inactiveClass]"
           to="/dashboard"
         >
           <svg
@@ -78,7 +78,9 @@ const inactiveClass = ref(
 
         <router-link
           class="flex items-center px-6 py-2 mt-4 duration-200 border-l-4"
-          :class="[$route.name === 'Tables' ? activeClass : inactiveClass]"
+          :class="[
+            $route.name === 'dashboard.note' ? activeClass : inactiveClass,
+          ]"
           to="/dashboard/note"
         >
           <svg
@@ -107,7 +109,7 @@ const inactiveClass = ref(
         <router-link
           class="flex items-center px-6 py-2 mt-4 duration-200 border-l-4"
           :class="[
-            $route.name === 'Manage Tasks' ? activeClass : inactiveClass,
+            $route.name === 'dashboard.task' ? activeClass : inactiveClass,
           ]"
           to="/dashboard/task"
         >
@@ -141,7 +143,7 @@ const inactiveClass = ref(
         <router-link
           class="flex items-center px-6 py-2 mt-4 duration-200 border-l-4"
           :class="[$route.name === 'Forms' ? activeClass : inactiveClass]"
-          to="/forms"
+          to="/dashboard"
         >
           <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
             <path
@@ -154,35 +156,23 @@ const inactiveClass = ref(
             />
           </svg>
 
-          <span class="mx-4">Forms</span>
+          <span class="mx-4">Report</span>
         </router-link>
 
         <router-link
           class="flex items-center px-6 py-2 mt-4 duration-200 border-l-4"
           :class="[$route.name === 'Cards' ? activeClass : inactiveClass]"
-          to="/cards"
+          to="/dashboard"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="w-5 h-5"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" />
-            <path
-              fill-rule="evenodd"
-              d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"
-              clip-rule="evenodd"
-            />
-          </svg>
+          <i class="ai-calendar"></i>
 
-          <span class="mx-4">Cards</span>
+          <span class="mx-4">Calender</span>
         </router-link>
 
         <router-link
           class="flex items-center px-6 py-2 mt-4 duration-200 border-l-4"
           :class="[$route.name === 'Modal' ? activeClass : inactiveClass]"
-          to="/modal"
+          to="/dashboard"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -202,20 +192,6 @@ const inactiveClass = ref(
           </svg>
 
           <span class="mx-4">Modal</span>
-        </router-link>
-
-        <router-link
-          class="flex items-center px-6 py-2 mt-4 duration-200 border-l-4"
-          :class="[$route.name === 'Blank' ? activeClass : inactiveClass]"
-          to="/blank"
-        >
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path
-              d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"
-            />
-          </svg>
-
-          <span class="mx-4">Blank</span>
         </router-link>
       </nav>
     </div>

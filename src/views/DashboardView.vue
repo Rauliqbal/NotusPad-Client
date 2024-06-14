@@ -2,13 +2,10 @@
 import { useUserStore } from "@/store/user";
 import { useNotesStore } from "@/store/notes";
 import { computed, onMounted } from "vue";
-import { useRouter } from "vue-router";
-import { useToast } from "vue-toast-notification";
-import { api } from "@/service/api";
+
 import DefaultLayout from "@/layout/DefaultLayout.vue";
 
 const userStore = useUserStore();
-const noteStore = useNotesStore();
 const user = computed(() => userStore.user);
 
 onMounted(() => {
@@ -162,7 +159,7 @@ onMounted(() => {
                   <th
                     class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
                   >
-                    website
+                    status
                   </th>
                   <th
                     class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
@@ -179,12 +176,8 @@ onMounted(() => {
                     class="px-6 py-4 border-b border-gray-200 whitespace-nowrap"
                   >
                     <div class="flex items-center">
-                      <div class="flex-shrink-0 w-10 h-10">
-                        <img
-                          class="w-10 h-10 rounded-full"
-                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                          alt=""
-                        />
+                      <div class="flex-shrink-0">
+                        {{ user?.username }}
                       </div>
 
                       <div class="ml-4">
@@ -199,10 +192,9 @@ onMounted(() => {
                   <td
                     class="px-6 py-4 border-b border-gray-200 whitespace-nowrap"
                   >
-                    <div class="text-sm leading-5 text-gray-900">
-                      Software Engineer
+                    <div class="leading-5 text-gray-900">
+                      {{ user?.email }}
                     </div>
-                    <div class="text-sm leading-5 text-gray-500">Web dev</div>
                   </td>
 
                   <td
@@ -216,7 +208,9 @@ onMounted(() => {
 
                   <td
                     class="px-6 py-4 text-sm leading-5 text-gray-500 border-b border-gray-200 whitespace-nowrap"
-                  ></td>
+                  >
+                    member
+                  </td>
 
                   <td
                     class="px-6 py-4 text-sm font-medium leading-5 text-right border-b border-gray-200 whitespace-nowrap"

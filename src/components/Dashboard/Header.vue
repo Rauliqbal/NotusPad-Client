@@ -10,7 +10,8 @@ const { isOpen } = useSidebar();
 const $toast = useToast();
 
 function logout() {
-  api.post("/logout");
+  localStorage.removeItem("access_token");
+
   $toast.info("Logout success", {
     position: "top-right",
     duration: 3000,

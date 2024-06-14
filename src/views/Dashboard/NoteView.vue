@@ -69,9 +69,9 @@ onMounted(() => {
         </div>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
+        <!-- :to="'/dashboard/note/' + note._id" -->
         <CardNote
           v-for="note in notes"
-          :to="'/dashboard/note/' + note._id"
           :key="note._id"
           :title="note.title"
           :content="note.content"

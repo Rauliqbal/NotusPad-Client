@@ -1,41 +1,37 @@
 <script setup>
 import { useRouter } from "vue-router";
-import { ref } from "vue";
-import axios from "axios";
-import Swal from "sweetalert2";
+import { reactive } from "vue";
+import { api } from "@/service/api";
+import { useToast } from "vue-toast-notification";
 
 const router = useRouter();
-
-const form = ref({
+const $toast = useToast();
+const form = reactive({
   username: "",
   email: "",
   password: "",
 });
 
-async function register() {
-  const response = await axios
-    .post(`${import.meta.env.VITE_API_URL}/register`, {
-      username: form.value.username,
-      email: form.value.email,
-      password: form.value.password,
+function register() {
+  api
+    .post("/register", {
+      username: form.username,
+      email: form.email,
+      password: form.password,
     })
-
-    .then((response) => {
-      Swal.fire({
-        title: response.data.message,
-        icon: "success",
+    .then(() => {
+      $toast.success("Akunmu berhasil dibuat!", {
+        position: "top-right",
+        duration: 3000,
       });
-
-      router.push("/signin");
+      router.push("/login");
     })
-
-    .catch((error) => {
-      // console.log(error.response.data);
-      Swal.fire({
-        title: error.response.data.message,
-        icon: "error",
-      });
-    });
+    .catch((error) =>
+      $toast.error("Email atau username sudah terdaftar", {
+        position: "top-right",
+        duration: 3000,
+      })
+    );
 }
 </script>
 <template>
@@ -110,7 +106,7 @@ async function register() {
           <p class="text-sm text-center">
             Already have an account?
             <router-link
-              to="/signin"
+              to="/login"
               class="font-medium text-indigo-500 hover:text-indigo-600 transition-all"
               >Sign in now</router-link
             >

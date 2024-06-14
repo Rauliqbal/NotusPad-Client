@@ -1,8 +1,5 @@
 //import vue router
 import { createRouter, createWebHistory } from "vue-router";
-import Cookies from "js-cookie";
-
-const getToken = () => Cookies.get("auth");
 
 //define a routes
 const routes = [
@@ -62,11 +59,7 @@ const router = createRouter({
 
 // Global navigation guard
 router.beforeEach((to, from, next) => {
-  // Ambil token otentikasi pengguna
-  const token = getToken();
-
-  console.log(token);
-
+  const token = localStorage.getItem("access_token");
   // Jika rute tujuan membutuhkan otentikasi dan pengguna tidak memiliki token
   if (to.matched.some((record) => record.meta.requiresAuth) && !token) {
     // Alihkan pengguna ke halaman login

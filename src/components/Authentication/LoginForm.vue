@@ -1,7 +1,6 @@
 <script setup>
 import { api } from "@/service/api";
 import { useUserStore } from "@/store/user";
-import Cookies from "js-cookie";
 import { reactive } from "vue";
 import { useRouter } from "vue-router";
 import { useToast } from "vue-toast-notification";
@@ -12,27 +11,46 @@ const user = reactive({
   email: "",
   password: "",
 });
-const userStore = useUserStore();
 
 function login() {
-  api
+  const response = api
     .post("/login", {
       email: user.email,
       password: user.password,
     })
-    .then(() => {
+    .then((response) => {
       $toast.success("Berhasil login!", {
         position: "top-right",
         duration: 3000,
       });
+
+      const token = response.data.token;
+      localStorage.setItem("access_token", token);
       router.push("/dashboard");
+      window.location.reload();
     })
-    .catch((error) =>
+    .catch((error) => {
       $toast.error(error.response.data.message, {
         position: "top-right",
         duration: 3000,
-      })
-    );
+      });
+    });
+
+  // try {
+  //   $toast.success("Berhasil login!", {
+  //     position: "top-right",
+  //     duration: 3000,
+  //   });
+
+  //   const token = response.data.token;
+  //   localStorage.setItem("access_token", token);
+  //   console.log(token);
+  // } catch (error) {
+  //   $toast.error("Email atau Password Salah!", {
+  //     position: "top-right",
+  //     duration: 3000,
+  //   });
+  // }
 }
 </script>
 <template>

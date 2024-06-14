@@ -1,7 +1,24 @@
 import axios from "axios";
 
+const url = "https://notus-pad-server.vercel.app/api";
 export const api = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL: url,
   timeout: 1000,
-  withCredentials: true,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
+
+api.interceptors.request.use(
+  (config) => {
+    const accessToken = localStorage.getItem("access_token");
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
