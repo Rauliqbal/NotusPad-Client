@@ -11,19 +11,11 @@ export const useNotesStore = defineStore("notes", {
   actions: {
     // Get All Notes
     async fetchNotes() {
-      api
-        .get("/note")
-        .then((response) => {
-          if (response.data && response.data.data) {
-            this.notes = response.data.data;
-          }
-        })
-        .catch((error) => {
-          if (error.response.status === 401) {
-            localStorage.clear();
-            window.location.reload();
-          }
-        });
+      api.get("/note").then((response) => {
+        if (response.data && response.data.data) {
+          this.notes = response.data.data;
+        }
+      });
     },
 
     // Create Note
