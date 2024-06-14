@@ -13,17 +13,25 @@ const form = reactive({
 });
 
 function register() {
-  try {
-    const response = api.post("/register", {
+  api
+    .post("/register", {
       username: form.username,
       email: form.email,
       password: form.password,
+    })
+    .then((response) => {
+      $toast.success("Akun berhasil dibuat", {
+        position: "top-right",
+        duration: 3000,
+      });
+      router.push("/login");
+    })
+    .catch((error) => {
+      $toast.error("Email sudah terdaftar", {
+        position: "top-right",
+        duration: 3000,
+      });
     });
-
-    router.push("/login");
-  } catch (error) {
-    console.log(error.message);
-  }
 }
 </script>
 <template>
