@@ -72,6 +72,7 @@ onMounted(() => {
         <!-- :to="'/dashboard/note/' + note._id" -->
         <CardNote
           v-for="note in notes"
+          to="/dashboard/note/"
           :key="note._id"
           :title="note.title"
           :content="note.content"
