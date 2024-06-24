@@ -6,22 +6,23 @@ import CardNote from "@/components/Dashboard/CardNote.vue";
 import modal from "@/components/Dashboard/Modal.vue";
 import { api } from "@/service/api";
 import { useToast } from "vue-toast-notification";
-import Cookies from "js-cookie";
 
-const noteStore = useNotesStore();
-const notes = computed(() => noteStore.notes);
 const showModal = ref(false);
+const showDelete = ref(false);
 const form = reactive({
   title: "",
   content: "",
 });
 const $toast = useToast();
-const token = Cookies.get("auth");
 
+const noteStore = useNotesStore();
+const noteById = computed(() => noteStore.noteById);
+const notes = computed(() => noteStore.notes);
+
+// CreateNote
 function createNote() {
-  api.defaults.headers.common["Authorization"] = token;
   try {
-    const response = api.post("/note", {
+    api.post("/note", {
       title: form.title,
       content: form.content,
     });
@@ -31,12 +32,31 @@ function createNote() {
       duration: 3000,
     });
   } catch (error) {
-    console.log(error);
+    $toast.error("gagal membuat catatan", {
+      position: "top-right",
+      duration: 3000,
+    });
   }
 }
 
+// Delete Note
+function deleteNote(id) {
+  api.delete("/note/" + id).then((response) => {
+    $toast.success("Catatan berhasil dihapus", {
+      position: "top-right",
+      duration: 3000,
+    });
+    setTimeout(function () {
+      window.location.reload();
+    }, 500);
+  });
+}
+
+console.log(noteById);
+
 onMounted(() => {
   noteStore.fetchNotes();
+  noteStore.fetchNotesById();
 });
 </script>
 <template>
@@ -69,14 +89,14 @@ onMounted(() => {
         </div>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
-        <!-- :to="'/dashboard/note/' + note._id" -->
         <CardNote
           v-for="note in notes"
-          to="/dashboard/note/"
+          :to="'/dashboard/note/'"
           :key="note._id"
           :title="note.title"
           :content="note.content"
           :createdAt="note.createdAt"
+          @delete-note="deleteNote(note._id)"
         />
       </div>
     </div>
@@ -107,14 +127,15 @@ onMounted(() => {
               />
             </div>
             <!-- Input Content -->
-            <div class="flex flex-col mt-4">
-              <textarea
-                id="content"
-                rows="5"
-                class="outline-none border-b-2 focus:border-indigo-500 mt-1 bg-slate-100 p-2 rounded-lg"
+            <div class="flex flex-col mt-4 border-b-2 bg-slate-100 rounded-lg">
+              <QuillEditor
+                toolbar="minimal"
+                v-model:content="form.content"
+                contentType="html"
+                theme="bubble"
                 placeholder="Apa yang ingin kamu catat?"
-                v-model="form.content"
-              ></textarea>
+              >
+              </QuillEditor>
             </div>
 
             <button type="submit" class="btn-primary mt-8">Simpan</button>

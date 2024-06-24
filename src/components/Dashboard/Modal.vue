@@ -34,6 +34,7 @@ defineProps({
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   transition: opacity 0.3s ease;
+  padding: 0 16px;
 }
 .modal-container {
   max-width: 800px;

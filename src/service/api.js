@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const url = "https://notus-pad-server.vercel.app/api";
+// const url = "https://notus-pad-server.vercel.app/api";
+// DEVELOPMENT
+const url = "http://localhost:3000/api";
 export const api = axios.create({
   baseURL: url,
   // timeout: 1000,

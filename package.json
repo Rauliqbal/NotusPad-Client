@@ -9,11 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vueup/vue-quill": "^1.2.0",
     "axios": "^1.7.2",
-    "js-cookie": "^3.0.5",
     "pinia": "^2.1.7",
     "vue": "^3.4.21",
-    "vue-cookies": "^1.8.4",
     "vue-router": "^4.3.0",
     "vue-toast-notification": "^3.1.2"
   },

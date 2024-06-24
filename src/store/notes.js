@@ -1,11 +1,12 @@
 import { api } from "@/service/api";
 import { defineStore } from "pinia";
-import Cookies from "js-cookie";
-const token = Cookies.get("auth");
+import { useRoute } from "vue-router";
+const route = useRoute();
 
 export const useNotesStore = defineStore("notes", {
   state: () => ({
     notes: null,
+    noteById: null,
   }),
   getters: {},
   actions: {
@@ -25,29 +26,23 @@ export const useNotesStore = defineStore("notes", {
           }
         });
     },
+    // Get All Notes
+    async fetchNotesById() {
+      api
+        .get(`/note/${route.params.id}`)
+        .then((response) => {
+          if (response.data && response.data.data) {
+            this.noteById = response.data.data;
+          }
+        })
+        .catch((error) => {
+          if (error.response?.status === 401) {
+            localStorage.clear();
+            window.location.reload();
+          }
+        });
+    },
 
     // Create Note
   },
 });
-
-// api
-//         .get("/user")
-//         .then((response) => {
-//           if (response.data && response.data.data) {
-//             this.user = response.data.data;
-//           }
-//           console.log(
-//             `Selamat Datang %c${this.user.username}!.`,
-//             "color: green"
-//           );
-//           console.log(
-//             "Organize Work And Life Easily, %cFor Productivity",
-//             "background-color: pink; color: black"
-//           );
-//         })
-//         .catch((error) => {
-//           if (error.response.status === 401) {
-//             localStorage.clear();
-//             window.location.reload();
-//           }
-//         });
