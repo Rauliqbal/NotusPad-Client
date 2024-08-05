@@ -8,7 +8,6 @@ import { api } from "@/service/api";
 import { useToast } from "vue-toast-notification";
 
 const showModal = ref(false);
-const showDelete = ref(false);
 const form = reactive({
   title: "",
   content: "",
@@ -91,7 +90,7 @@ onMounted(() => {
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
         <CardNote
           v-for="note in notes"
-          :to="'/dashboard/note/'"
+          :to="'/dashboard/note/' + note._id"
           :key="note._id"
           :title="note.title"
           :content="note.content"
@@ -124,15 +123,16 @@ onMounted(() => {
                 class="outline-none border-b-2 focus:border-indigo-500 text-xl mt-1"
                 placeholder="Judul Catatan"
                 v-model="form.title"
+                required
               />
             </div>
             <!-- Input Content -->
             <div class="flex flex-col mt-4 border-b-2 bg-slate-100 rounded-lg">
               <QuillEditor
-                toolbar="minimal"
+                toolbar="essential"
                 v-model:content="form.content"
                 contentType="html"
-                theme="bubble"
+                theme="snow"
                 placeholder="Apa yang ingin kamu catat?"
               >
               </QuillEditor>
